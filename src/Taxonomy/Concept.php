@@ -46,11 +46,11 @@ class Concept {
     }
 
     /**
-     * @return string
+     * @return NamespaceName
      */
     public function getType()
     {
-        return $this->element->getAttribute( 'type' );
+        return NamespaceName::create( $this->element, $this->element->getAttribute( 'type' ) );
     }
 
     /**

@@ -4,10 +4,10 @@ namespace adrianclay\xbrl\Taxonomy;
 class NamespaceName {
 
     /** @var string */
-    public $namespace;
+    private $namespace;
 
     /** @var string */
-    public $name;
+    private $name;
 
     /**
      * @param string $namespace
@@ -17,6 +17,22 @@ class NamespaceName {
     {
         $this->namespace = $namespace;
         $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNamespace()
+    {
+        return $this->namespace;
     }
 
     /**

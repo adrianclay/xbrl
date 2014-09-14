@@ -1,7 +1,7 @@
 <?php
 namespace adrianclay\xbrl\Taxonomy\Calculation;
 
-class Arc extends Arc {
+class Arc extends \adrianclay\xbrl\Taxonomy\Arc {
 
 
 }

@@ -19,7 +19,7 @@ class Hypercubes extends \FilterIterator
     {
         /** @var NamespaceName $substitutionGroup */
         $substitutionGroup = parent::current()->getSubstitutionGroup();
-        return $substitutionGroup->namespace == "http://xbrl.org/2005/xbrldt" && $substitutionGroup->name == "hypercubeItem";
+        return $substitutionGroup->getNamespace() == "http://xbrl.org/2005/xbrldt" && $substitutionGroup->getName() == "hypercubeItem";
     }
 
     /**
