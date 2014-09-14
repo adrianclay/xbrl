@@ -1,7 +1,19 @@
 {
     "name": "adrianclay/xbrl",
-    "description": "Parse XBRL taxonomies with ease",
+    "type": "library",
+    "description": "A simple API to parse XBRL taxonomies",
+    "keywords": [ "xbrl", "taxonomy" ],
+    "homepage": "https://github.com/adrianclay/xbrl",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Adrian Clay",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
     "autoload": {
         "psr-4": {
             "adrianclay\\xbrl\\": "src/"
