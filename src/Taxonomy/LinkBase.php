@@ -71,10 +71,6 @@ class LinkBase implements \IteratorAggregate {
      */
     public function getIterator()
     {
-        $appendIterator = new \AppendIterator();
-        foreach( $this->links as $link ) {
-            $appendIterator->append( $link );
-        }
-        return $appendIterator;
+        return new \ArrayIterator( $this->links );
     }
 }

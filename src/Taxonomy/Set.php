@@ -62,11 +62,23 @@ class Set {
      */
     public function getArcs()
     {
-        $multiIterator = new \AppendIterator();
-        foreach( $this->linkbases as $linkBase ) {
-            $multiIterator->append( $linkBase->getIterator() );
+        $appendIterator = new \AppendIterator();
+        foreach( $this->getArcCollections() as $arcCollection ) {
+            $appendIterator->append( $arcCollection );
         }
-        return $multiIterator;
+        return $appendIterator;
+    }
+
+    /**
+     * @return ArcCollection[]
+     */
+    public function getArcCollections()
+    {
+        $appendIterator = new \AppendIterator();
+        foreach( $this->linkbases as $linkBase ) {
+            $appendIterator->append( $linkBase->getIterator() );
+        }
+        return $appendIterator;
     }
 
     /**
