@@ -1,6 +1,6 @@
 <?php
-namespace adrianclay\xbrl\Taxonomy;
 
+namespace adrianclay\xbrl\Taxonomy;
 
 class Dimension
 {
@@ -10,11 +10,7 @@ class Dimension
     /** @var \adrianclay\xbrl\Taxonomy\Concept */
     private $concept;
 
-    /**
-     * @param Set $set
-     * @param Concept $dimension
-     */
-    public function __construct( Set $set, Concept $dimension )
+    public function __construct(Set $set, Concept $dimension)
     {
         $this->set = $set;
         $this->concept = $dimension;
@@ -35,14 +31,14 @@ class Dimension
     {
         $dimensions = new \AppendIterator();
         $set = $this->set;
-        foreach( $this->set->getArcsFromConcept( $this->concept )  as $arc ) {
-            if ( $arc->getArcRole() == "http://xbrl.org/int/dim/arcrole/dimension-domain" && $arc instanceof Definition\Arc ) {
-                $dimensions->append( new \ArrayIterator( array_map( function( NamespaceId $id ) use ( $set ) {
-                    return new Domain( $set, $set->getConcept( $id ) );
-                }, $arc->getToConcepts() ) ) );
+        foreach ($this->set->getArcsFromConcept($this->concept)  as $arc) {
+            if ('http://xbrl.org/int/dim/arcrole/dimension-domain' == $arc->getArcRole() && $arc instanceof Definition\Arc) {
+                $dimensions->append(new \ArrayIterator(array_map(function (NamespaceId $id) use ($set) {
+                    return new Domain($set, $set->getConcept($id));
+                }, $arc->getToConcepts())));
             }
         }
+
         return $dimensions;
     }
-
 }

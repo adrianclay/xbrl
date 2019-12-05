@@ -1,8 +1,9 @@
 <?php
+
 namespace adrianclay\xbrl\Taxonomy\Reference;
 
-class Arc extends \adrianclay\xbrl\Taxonomy\Arc {
-
+class Arc extends \adrianclay\xbrl\Taxonomy\Arc
+{
     /**
      * @return \adrianclay\xbrl\Taxonomy\Reference[]
      */
@@ -10,7 +11,7 @@ class Arc extends \adrianclay\xbrl\Taxonomy\Arc {
     {
         /** @var Link $link */
         $link = $this->locatorCollection;
-        return $link->getReference( $this->getTo() );
-    }
 
+        return $link->getReference($this->getTo());
+    }
 }

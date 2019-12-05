@@ -1,8 +1,9 @@
 <?php
+
 namespace adrianclay\xbrl\Taxonomy;
 
-class NamespaceId {
-
+class NamespaceId
+{
     /** @var string */
     public $namespace;
 
@@ -13,10 +14,9 @@ class NamespaceId {
      * @param string $namespace
      * @param string $id
      */
-    public function __construct( $namespace, $id )
+    public function __construct($namespace, $id)
     {
         $this->namespace = $namespace;
         $this->id = $id;
     }
-
 }

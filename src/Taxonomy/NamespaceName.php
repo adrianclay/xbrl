@@ -1,8 +1,9 @@
 <?php
+
 namespace adrianclay\xbrl\Taxonomy;
 
-class NamespaceName {
-
+class NamespaceName
+{
     /** @var string */
     private $namespace;
 
@@ -13,7 +14,7 @@ class NamespaceName {
      * @param string $namespace
      * @param string $name
      */
-    public function __construct( $namespace, $name )
+    public function __construct($namespace, $name)
     {
         $this->namespace = $namespace;
         $this->name = $name;
@@ -36,15 +37,15 @@ class NamespaceName {
     }
 
     /**
-     * @param \DOMElement $element
      * @param string $text
+     *
      * @return NamespaceName
      */
-    public static function create( \DOMElement $element, $text )
+    public static function create(\DOMElement $element, $text)
     {
-        list( $prefix, $name ) = explode( ':', $text );
-        $namespace = $element->lookupNamespaceUri( $prefix );
-        return new NamespaceName( $namespace, $name );
-    }
+        list($prefix, $name) = explode(':', $text);
+        $namespace = $element->lookupNamespaceUri($prefix);
 
+        return new NamespaceName($namespace, $name);
+    }
 }

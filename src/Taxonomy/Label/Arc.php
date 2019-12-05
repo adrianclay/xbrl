@@ -1,8 +1,9 @@
 <?php
+
 namespace adrianclay\xbrl\Taxonomy\Label;
 
-class Arc extends \adrianclay\xbrl\Taxonomy\Arc {
-
+class Arc extends \adrianclay\xbrl\Taxonomy\Arc
+{
     /**
      * @return \adrianclay\xbrl\Taxonomy\Label[]
      */
@@ -10,7 +11,7 @@ class Arc extends \adrianclay\xbrl\Taxonomy\Arc {
     {
         /** @var Link $link */
         $link = $this->locatorCollection;
-        return $link->getLabels( $this->getTo() );
-    }
 
+        return $link->getLabels($this->getTo());
+    }
 }

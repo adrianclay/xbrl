@@ -1,16 +1,17 @@
 <?php
+
 namespace adrianclay\xbrl\Taxonomy;
 
-class Set {
-
+class Set
+{
     /** @var string[] */
-    private $realPathToImport = array();
+    private $realPathToImport = [];
 
     /** @var Schema[] */
-    private $imports = array();
+    private $imports = [];
 
     /** @var LinkBase[] */
-    private $linkbases = array();
+    private $linkbases = [];
 
     /** @var Arc[][][] */
     private $arcCache = null;
@@ -18,29 +19,32 @@ class Set {
     /**
      * @param string $basePath
      * @param string $schemaLocation
+     *
      * @return Schema
      */
-    public function import( $basePath, $schemaLocation )
+    public function import($basePath, $schemaLocation)
     {
-        $p = parse_url( $schemaLocation );
-        if ( empty( $p['scheme'] ) ) {
-            $schemaLocation = realpath( $basePath . '/' . $p['path'] );
-            if ( !empty( $this->realPathToImport[$schemaLocation] ) ) {
+        $p = parse_url($schemaLocation);
+        if (empty($p['scheme'])) {
+            $schemaLocation = realpath($basePath.'/'.$p['path']);
+            if (!empty($this->realPathToImport[$schemaLocation])) {
                 return $this->imports[$this->realPathToImport[$schemaLocation]];
             }
-            $dom = new Schema( $schemaLocation );
-            $basePath = dirname( $schemaLocation );
-            foreach( $dom->getImports() as $import ) {
-                $this->import( $basePath, $import->value );
+            $dom = new Schema($schemaLocation);
+            $basePath = dirname($schemaLocation);
+            foreach ($dom->getImports() as $import) {
+                $this->import($basePath, $import->value);
             }
-            foreach( $dom->getLinkbases() as $import ) {
-                $this->importLinkbase( $basePath, $import->value );
+            foreach ($dom->getLinkbases() as $import) {
+                $this->importLinkbase($basePath, $import->value);
             }
             $namespace = $dom->getNamespace();
             $this->imports[$namespace] = $dom;
             $this->realPathToImport[$schemaLocation] = $namespace;
+
             return $dom;
         }
+
         return null;
     }
 
@@ -48,12 +52,12 @@ class Set {
      * @param string $basePath
      * @param string $schemaLocation
      */
-    protected function importLinkbase( $basePath, $schemaLocation )
+    protected function importLinkbase($basePath, $schemaLocation)
     {
-        $p = parse_url( $schemaLocation );
-        if ( empty( $p['scheme'] ) ) {
-            $schemaLocation = realpath( $basePath . '/' . $p['path'] );
-            $this->linkbases[] = new LinkBase( $this, $schemaLocation );
+        $p = parse_url($schemaLocation);
+        if (empty($p['scheme'])) {
+            $schemaLocation = realpath($basePath.'/'.$p['path']);
+            $this->linkbases[] = new LinkBase($this, $schemaLocation);
         }
     }
 
@@ -63,9 +67,10 @@ class Set {
     public function getArcs()
     {
         $appendIterator = new \AppendIterator();
-        foreach( $this->getArcCollections() as $arcCollection ) {
-            $appendIterator->append( $arcCollection );
+        foreach ($this->getArcCollections() as $arcCollection) {
+            $appendIterator->append($arcCollection);
         }
+
         return $appendIterator;
     }
 
@@ -75,64 +80,63 @@ class Set {
     public function getArcCollections()
     {
         $appendIterator = new \AppendIterator();
-        foreach( $this->linkbases as $linkBase ) {
-            $appendIterator->append( $linkBase->getIterator() );
+        foreach ($this->linkbases as $linkBase) {
+            $appendIterator->append($linkBase->getIterator());
         }
+
         return $appendIterator;
     }
 
     /**
-     * @param Concept $concept
      * @return Arc[]
      */
-    public function getArcsFromConcept( Concept $concept )
+    public function getArcsFromConcept(Concept $concept)
     {
-        if ( is_null( $this->arcCache ) ) {
-            $this->arcCache = array();
-            foreach( $this->getArcs() as $arc )
-            {
+        if (is_null($this->arcCache)) {
+            $this->arcCache = [];
+            foreach ($this->getArcs() as $arc) {
                 /** @var $fromConcept NamespaceId */
-                foreach( $arc->getFromConcepts() as $fromConcept )
-                {
-                    if ( !isset( $this->arcCache[$fromConcept->namespace] ) ) {
-                        $this->arcCache[$fromConcept->namespace] = array();
+                foreach ($arc->getFromConcepts() as $fromConcept) {
+                    if (!isset($this->arcCache[$fromConcept->namespace])) {
+                        $this->arcCache[$fromConcept->namespace] = [];
                     }
-                    if ( !isset( $this->arcCache[$fromConcept->namespace][$fromConcept->id] ) ) {
-                        $this->arcCache[$fromConcept->namespace][$fromConcept->id] = array();
+                    if (!isset($this->arcCache[$fromConcept->namespace][$fromConcept->id])) {
+                        $this->arcCache[$fromConcept->namespace][$fromConcept->id] = [];
                     }
                     $this->arcCache[$fromConcept->namespace][$fromConcept->id][] = $arc;
                 }
             }
         }
         $namespaceArcCache = $this->arcCache[$concept->getNamespace()];
-        if ( $namespaceArcCache ) {
+        if ($namespaceArcCache) {
             return $namespaceArcCache[$concept->getId()];
         }
+
         return null;
     }
 
     /**
-     *
      * @return Concept[]
      */
     public function getConcepts()
     {
         $multiIterator = new \AppendIterator();
-        foreach( $this->imports as $import ) {
-            $multiIterator->append( new \ArrayIterator( $import->getConcepts() ) );
+        foreach ($this->imports as $import) {
+            $multiIterator->append(new \ArrayIterator($import->getConcepts()));
         }
+
         return $multiIterator;
     }
 
     /**
-     * @param NamespaceId $id
      * @return Concept|null
      */
-    public function getConcept( NamespaceId $id )
+    public function getConcept(NamespaceId $id)
     {
-        if ( !empty( $this->imports[$id->namespace] ) ) {
-            return $this->imports[$id->namespace]->getConceptById( $id->id );
+        if (!empty($this->imports[$id->namespace])) {
+            return $this->imports[$id->namespace]->getConceptById($id->id);
         }
+
         return null;
     }
 }

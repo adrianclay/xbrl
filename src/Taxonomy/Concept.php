@@ -1,21 +1,16 @@
 <?php
+
 namespace adrianclay\xbrl\Taxonomy;
 
-
-class Concept {
-
+class Concept
+{
     /** @var Schema */
     private $parent;
 
     /** @var \DOMElement */
     private $element;
 
-    /**
-     *
-     * @param Schema      $parent
-     * @param \DOMElement $element
-     */
-    public function __construct( Schema $parent, \DOMElement $element )
+    public function __construct(Schema $parent, \DOMElement $element)
     {
         $this->parent = $parent;
         $this->element = $element;
@@ -34,7 +29,7 @@ class Concept {
      */
     public function getName()
     {
-        return $this->element->getAttribute( 'name' );
+        return $this->element->getAttribute('name');
     }
 
     /**
@@ -42,7 +37,7 @@ class Concept {
      */
     public function getId()
     {
-        return $this->element->getAttribute( 'id' );
+        return $this->element->getAttribute('id');
     }
 
     /**
@@ -50,7 +45,7 @@ class Concept {
      */
     public function getType()
     {
-        return NamespaceName::create( $this->element, $this->element->getAttribute( 'type' ) );
+        return NamespaceName::create($this->element, $this->element->getAttribute('type'));
     }
 
     /**
@@ -58,7 +53,7 @@ class Concept {
      */
     public function getSubstitutionGroup()
     {
-        return NamespaceName::create( $this->element, $this->element->getAttribute( 'substitutionGroup' ) );
+        return NamespaceName::create($this->element, $this->element->getAttribute('substitutionGroup'));
     }
 
     /**
@@ -66,7 +61,7 @@ class Concept {
      */
     public function getPeriodType()
     {
-        return $this->element->getAttributeNs( 'http://www.xbrl.org/2003/instance', 'periodType' );
+        return $this->element->getAttributeNs('http://www.xbrl.org/2003/instance', 'periodType');
     }
 
     /**
@@ -74,6 +69,6 @@ class Concept {
      */
     public function getBalance()
     {
-        return $this->element->getAttributeNs( 'http://www.xbrl.org/2003/instance', 'balance' );
+        return $this->element->getAttributeNs('http://www.xbrl.org/2003/instance', 'balance');
     }
 }

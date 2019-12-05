@@ -1,20 +1,16 @@
 <?php
+
 namespace adrianclay\xbrl\Taxonomy;
 
-
-class Arc {
-
+class Arc
+{
     /** @var \DOMElement */
     protected $element;
 
-    /** @var ArcCollection  */
+    /** @var ArcCollection */
     protected $locatorCollection;
 
-    /**
-     * @param ArcCollection  $collection
-     * @param \DOMElement        $element
-     */
-    public function __construct( ArcCollection $collection, \DOMElement $element )
+    public function __construct(ArcCollection $collection, \DOMElement $element)
     {
         $this->locatorCollection = $collection;
         $this->element = $element;
@@ -25,19 +21,19 @@ class Arc {
      */
     public function getFromConcepts()
     {
-        return $this->locatorCollection->getHrefs( $this->getFrom() );
+        return $this->locatorCollection->getHrefs($this->getFrom());
     }
 
     /**
-     * @param NamespaceId $id
      * @return bool
      */
-    public function isFrom( NamespaceId $id )
+    public function isFrom(NamespaceId $id)
     {
         $isFrom = false;
-        foreach( $this->getFromConcepts() as $from ) {
+        foreach ($this->getFromConcepts() as $from) {
             $isFrom |= $from->id == $id->id && $from->namespace == $id->namespace;
         }
+
         return $isFrom;
     }
 
@@ -46,7 +42,7 @@ class Arc {
      */
     protected function getFrom()
     {
-        return $this->element->getAttributeNS( 'http://www.w3.org/1999/xlink', 'from' );
+        return $this->element->getAttributeNS('http://www.w3.org/1999/xlink', 'from');
     }
 
     /**
@@ -54,7 +50,7 @@ class Arc {
      */
     protected function getTo()
     {
-        return $this->element->getAttributeNS( 'http://www.w3.org/1999/xlink', 'to' );
+        return $this->element->getAttributeNS('http://www.w3.org/1999/xlink', 'to');
     }
 
     /**
@@ -62,7 +58,7 @@ class Arc {
      */
     public function getArcRole()
     {
-        return $this->element->getAttributeNS( 'http://www.w3.org/1999/xlink', 'arcrole' );
+        return $this->element->getAttributeNS('http://www.w3.org/1999/xlink', 'arcrole');
     }
 
     /**
@@ -70,7 +66,7 @@ class Arc {
      */
     public function getTitle()
     {
-        return $this->element->getAttributeNS( 'http://www.w3.org/1999/xlink', 'title' );
+        return $this->element->getAttributeNS('http://www.w3.org/1999/xlink', 'title');
     }
 
     /**
@@ -78,7 +74,7 @@ class Arc {
      */
     public function getOrder()
     {
-        return $this->element->getAttributeNS( 'http://www.w3.org/1999/xlink', 'order' );
+        return $this->element->getAttributeNS('http://www.w3.org/1999/xlink', 'order');
     }
 
     /**
@@ -86,6 +82,6 @@ class Arc {
      */
     public function isOptional()
     {
-        return $this->element->getAttributeNS( 'http://www.w3.org/1999/xlink', 'use' ) == 'optional';
+        return 'optional' == $this->element->getAttributeNS('http://www.w3.org/1999/xlink', 'use');
     }
 }

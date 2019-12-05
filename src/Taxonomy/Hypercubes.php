@@ -1,15 +1,13 @@
 <?php
+
 namespace adrianclay\xbrl\Taxonomy;
 
 class Hypercubes extends \FilterIterator
 {
-    /**
-     * @param Set $set
-     */
-    public function __construct( Set $set )
+    public function __construct(Set $set)
     {
         $this->set = $set;
-        parent::__construct( $set->getConcepts() );
+        parent::__construct($set->getConcepts());
     }
 
     /**
@@ -19,7 +17,8 @@ class Hypercubes extends \FilterIterator
     {
         /** @var NamespaceName $substitutionGroup */
         $substitutionGroup = parent::current()->getSubstitutionGroup();
-        return $substitutionGroup->getNamespace() == "http://xbrl.org/2005/xbrldt" && $substitutionGroup->getName() == "hypercubeItem";
+
+        return 'http://xbrl.org/2005/xbrldt' == $substitutionGroup->getNamespace() && 'hypercubeItem' == $substitutionGroup->getName();
     }
 
     /**
@@ -27,6 +26,6 @@ class Hypercubes extends \FilterIterator
      */
     public function current()
     {
-        return new Hypercube( $this->set, parent::current() );
+        return new Hypercube($this->set, parent::current());
     }
 }

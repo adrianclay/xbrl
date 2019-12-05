@@ -1,4 +1,5 @@
 <?php
+
 namespace adrianclay\xbrl\Taxonomy;
 
 class Schema
@@ -12,10 +13,10 @@ class Schema
     /**
      * @param string $path
      */
-    public function __construct( $path )
+    public function __construct($path)
     {
         $this->dom = new \DOMDocument();
-        $this->dom->load( $path );
+        $this->dom->load($path);
     }
 
     /**
@@ -23,7 +24,7 @@ class Schema
      */
     public function getNamespace()
     {
-        return $this->dom->documentElement->getAttribute( 'targetNamespace' );
+        return $this->dom->documentElement->getAttribute('targetNamespace');
     }
 
     /**
@@ -31,26 +32,29 @@ class Schema
      */
     public function getConcepts()
     {
-        if ( $this->concepts == null ) {
-            $this->concepts = array();
-            $xPath = new \DOMXPath( $this->dom );
-            $xPath->registerNamespace( 'xsd', 'http://www.w3.org/2001/XMLSchema' );
-            $xPath->registerNamespace( 'link', 'http://www.xbrl.org/2003/linkbase' );
-            foreach( $xPath->evaluate( '//xsd:schema/xsd:element' ) as $element ) {
-                $concept = new Concept( $this, $element );
+        if (null == $this->concepts) {
+            $this->concepts = [];
+            $xPath = new \DOMXPath($this->dom);
+            $xPath->registerNamespace('xsd', 'http://www.w3.org/2001/XMLSchema');
+            $xPath->registerNamespace('link', 'http://www.xbrl.org/2003/linkbase');
+            foreach ($xPath->evaluate('//xsd:schema/xsd:element') as $element) {
+                $concept = new Concept($this, $element);
                 $this->concepts[$concept->getId()] = $concept;
             }
         }
+
         return $this->concepts;
     }
 
     /**
      * @param string $id
+     *
      * @return Concept
      */
-    public function getConceptById( $id )
+    public function getConceptById($id)
     {
         $concepts = $this->getConcepts();
+
         return $concepts[$id];
     }
 
@@ -59,9 +63,10 @@ class Schema
      */
     public function getImports()
     {
-        $xPath = new \DOMXPath( $this->dom );
-        $xPath->registerNamespace( 'xsd', 'http://www.w3.org/2001/XMLSchema' );
-        return $xPath->evaluate( "//xsd:schema/xsd:import/@schemaLocation" );
+        $xPath = new \DOMXPath($this->dom);
+        $xPath->registerNamespace('xsd', 'http://www.w3.org/2001/XMLSchema');
+
+        return $xPath->evaluate('//xsd:schema/xsd:import/@schemaLocation');
     }
 
     /**
@@ -69,10 +74,11 @@ class Schema
      */
     public function getLinkbases()
     {
-        $xPath = new \DOMXPath( $this->dom );
-        $xPath->registerNamespace( 'xsd', 'http://www.w3.org/2001/XMLSchema' );
-        $xPath->registerNamespace( 'link', 'http://www.xbrl.org/2003/linkbase' );
-        $xPath->registerNamespace( 'xlink', 'http://www.w3.org/1999/xlink' );
-        return $xPath->evaluate( "//xsd:schema/xsd:annotation/xsd:appinfo/link:linkbaseRef/@xlink:href" );
+        $xPath = new \DOMXPath($this->dom);
+        $xPath->registerNamespace('xsd', 'http://www.w3.org/2001/XMLSchema');
+        $xPath->registerNamespace('link', 'http://www.xbrl.org/2003/linkbase');
+        $xPath->registerNamespace('xlink', 'http://www.w3.org/1999/xlink');
+
+        return $xPath->evaluate('//xsd:schema/xsd:annotation/xsd:appinfo/link:linkbaseRef/@xlink:href');
     }
 }

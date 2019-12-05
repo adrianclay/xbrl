@@ -1,6 +1,6 @@
 <?php
-namespace adrianclay\xbrl\Taxonomy;
 
+namespace adrianclay\xbrl\Taxonomy;
 
 class Reference extends Resource
 {
@@ -11,5 +11,4 @@ class Reference extends Resource
     {
         return $this->element->nodeValue;
     }
-
 }

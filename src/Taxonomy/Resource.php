@@ -1,27 +1,23 @@
 <?php
+
 namespace adrianclay\xbrl\Taxonomy;
 
-
-class Resource {
-
+class Resource
+{
     /** @var \DOMElement */
     protected $element;
 
-    /**
-     * @param \DOMElement $element
-     */
-    public function __construct( \DOMElement $element )
+    public function __construct(\DOMElement $element)
     {
         $this->element = $element;
     }
-
 
     /**
      * @return string
      */
     public function getResourceLabel()
     {
-        return $this->element->getAttributeNS( 'http://www.w3.org/1999/xlink', 'label' );
+        return $this->element->getAttributeNS('http://www.w3.org/1999/xlink', 'label');
     }
 
     /**
@@ -29,6 +25,6 @@ class Resource {
      */
     public function getRole()
     {
-        return $this->element->getAttributeNS( 'http://www.w3.org/1999/xlink', 'role' );
+        return $this->element->getAttributeNS('http://www.w3.org/1999/xlink', 'role');
     }
 }
