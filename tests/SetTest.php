@@ -3,7 +3,7 @@ use adrianclay\xbrl\Taxonomy\Concept;
 use adrianclay\xbrl\Taxonomy\NamespaceId;
 use adrianclay\xbrl\Taxonomy\Set;
 
-class SetTest extends PHPUnit_Framework_TestCase
+class SetTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @return Set
