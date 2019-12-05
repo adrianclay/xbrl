@@ -4,8 +4,8 @@ php:
   - 7.3
   - 7.2
   - 7.1
-  - 7.0
   - hhvm
 before_script:
   - composer install
   - vendor/bin/php-cs-fixer fix -v --dry-run --stop-on-violation --using-cache=no src/ --rules=@Symfony
+  - vendor/bin/phpstan analyze src --level=1

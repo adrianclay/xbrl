@@ -4,6 +4,8 @@ namespace adrianclay\xbrl\Taxonomy;
 
 class Hypercubes extends \FilterIterator
 {
+    private $set;
+
     public function __construct(Set $set)
     {
         $this->set = $set;
